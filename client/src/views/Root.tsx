@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter, Route, Redirect } from 'react-router-dom';
 import List from 'views/List/List';
 
-
 function Root() {
   return (
       <BrowserRouter>
