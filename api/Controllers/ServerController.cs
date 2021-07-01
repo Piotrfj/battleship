@@ -16,8 +16,7 @@ namespace DefaultNamespace
         }
 
         [HttpGet]
-        [Route("all")]
-        public GameServer[] All()
+        public GameServer[] Index()
         {
             return _gameServerService.GetAllServers();
         }
