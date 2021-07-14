@@ -2,7 +2,7 @@ using api.Interfaces;
 using api.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DefaultNamespace
+namespace api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

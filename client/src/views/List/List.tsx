@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import ServerService from 'services/serverService';
 import { GameServer } from 'models';
+import { Link } from 'react-router-dom';
 
 const List = () => {
     useEffect(() => {
-        ServerService.someRequest().then(data => {
+        ServerService.getAvailableServers().then(data => {
             setServers(data.data);
         });
     },[])
@@ -14,7 +15,7 @@ const List = () => {
     return (
         <div>
             List is working
-            {servers.map(server => <p>{server.title}</p>)}
+            {servers.map(server => <Link to={'/list/' + server.id}>{server.title}</Link>)}
         </div>
     );
 };
