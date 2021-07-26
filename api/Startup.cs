@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using api.Hubs;
 using api.Interfaces;
 using api.Services;
 using Microsoft.AspNetCore.Builder;
@@ -34,7 +35,12 @@ namespace api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
             });
+            services.AddCors(options => options.AddDefaultPolicy(builder =>
+            {
+                builder.WithOrigins(Configuration["ClientUrl"]).AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+            }));
             services.AddSingleton<IGameServerService, StaticGameServerService>();
+            services.AddSingleton<IPlayersListService, PlayersListService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +53,8 @@ namespace api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "api v1"));
             }
 
+            app.UseCors();
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
@@ -56,6 +64,7 @@ namespace api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ServerHub>("/api/server/hub");
             });
         }
     }
